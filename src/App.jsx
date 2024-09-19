@@ -31,7 +31,7 @@ function App() {
      
      
      {mnemonic&&(
-      <div className='flex justify-between my-20'>
+      <div className='md:flex md:justify-between my-20 '>
       <Solanawallet />
       <Ethereum />  
 
