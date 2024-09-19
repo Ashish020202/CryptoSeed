@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { generateMnemonic } from "bip39";
 import './App.css'
+import Solanawallet from './components/Solanawallet';
+import { Ethereum } from './components/Ethereum';
 
 
 function App() {  
@@ -14,7 +16,7 @@ function App() {
   return (
     <>
      <div className=''>
-       <button onClick={findNeumonic} className='bg-slate-600 p-4 text-yellow-600 rounded-md border-red-600'>Create you seed</button>
+       <button onClick={findNeumonic} className='bg-slate-700 p-4 text-yellow-600 rounded-md border-red-600'>Create you seed</button>
      </div>
      <div className='my-5'>
      {mnemonic.length>0 && (
@@ -26,6 +28,16 @@ function App() {
       </div>
      )}
      </div>
+     
+     
+     {mnemonic&&(
+      <div className='flex justify-between my-20'>
+      <Solanawallet />
+      <Ethereum />  
+
+     </div>
+
+     )}
      
     </>
   )
