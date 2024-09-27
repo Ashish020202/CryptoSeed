@@ -8,7 +8,7 @@ const Solanawallet = ({mnemonic}) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [publicKeys, setPublicKeys] = useState([]);
   return (
-    <div>  
+    <div className=''>  
       <div className="w-full max-w-lg p-6 bg-slate-700  backdrop-blur-md shadow-lg rounded-lg border border-gray-200">
         <div className="mb-4">
         <button className="px-4 w-40 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-all" onClick={function() {
@@ -23,7 +23,7 @@ const Solanawallet = ({mnemonic}) => {
             Add Solana wallet
         </button>
         {publicKeys.map(p => <div>
-            {p.toBase58()}
+          sol- {p.toBase58()}
         </div>)}
         </div>
       </div>
