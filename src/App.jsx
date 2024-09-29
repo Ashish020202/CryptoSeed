@@ -32,7 +32,7 @@ function App() {
      </div>
      <div className='relative'>
               <button 
-                className="absolute top-0 right-0 bg-slate-700 text-white p-2 rounded"
+                className="absolute top-0 right-0 bg-slate-700 text-white p-4 rounded"
                 onClick={hideShow}
               >
                 {isvisible ? "Hide" : "Show"}
@@ -53,11 +53,11 @@ function App() {
      
      
      {mnemonic&&(
-      <div className='md:flex md:justify-between my-20'>
-      <div className='w-full h-96'>
+      <div className='md:flex md:justify-between my-20 '>
+      <div className='w-96 h-96 border border-x-2 border-y-2 rounded-xl p-7 border-black'>
       <Solanawallet />
       </div>
-      <div className='w-full h-96'>
+      <div className='w-96 h-96 border border-x-2 border-y-2 rounded-xl p-5 border-black'>
       <Ethereum />
       </div>  
 
