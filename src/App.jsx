@@ -4,6 +4,8 @@ import './App.css'
 import Solanawallet from './components/Solanawallet';
 import { Ethereum } from './components/Ethereum';
 import Nav from './components/Nav';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/ReactToastify.css';
 
 
 
@@ -20,12 +22,28 @@ function App() {
     setIsvisisble(!isvisible);
   }
 
+  const copyToClipboard = () => {
+    if (mnemonic.length > 0) {
+      const phrase = mnemonic.join(' ');
+      navigator.clipboard.writeText(phrase)
+        .then(() => {
+          toast("Secret phrase copied");
+        })
+        .catch(() => {
+          toast("Failed to copy secret phrase.");
+        });
+        
+    }
+  };
+
+
   return (
     <>
-    
-     <Nav />
+    <div className='my-0'>
+    <Nav />
+    </div>
      
-     <div className='border border-x-2 border-y-2 rounded-xl p-7 border-black mt-12'>
+     <div className='border border-x-2 border-y-2 rounded-xl p-5 border-black mt-12'>
      <div className='flex justify-between'>
      <div>
        <button onClick={findNeumonic} className='bg-slate-700 p-4 text-yellow-600 rounded-md border-red-600'>Create Secret Phrase</button>
@@ -47,14 +65,22 @@ function App() {
       ))}
 
       </div>
+      
      )}
      </div>
+     <button 
+                onClick={copyToClipboard} 
+                className='mt-1 bg-slate-200 border-x-2 border-y-2 border-black flex justify-start text-black py-2 px-4 rounded align-content: flex-end;'>
+                copy
+              </button>
+              <ToastContainer />
+            
      </div>
      
      
      {mnemonic&&(
-      <div className='md:flex md:justify-between my-20 '>
-      <div className='w-96 h-96 border border-x-2 border-y-2 rounded-xl p-7 border-black'>
+      <div className='md:flex md:justify-between gap-4 my-10'>
+      <div className='w-96 h-96 border border-x-2 border-y-2 rounded-xl p-5 border-black'>
       <Solanawallet />
       </div>
       <div className='w-96 h-96 border border-x-2 border-y-2 rounded-xl p-5 border-black'>
@@ -64,7 +90,7 @@ function App() {
      </div>
 
      )}
-     
+
     </>
   )
 }
