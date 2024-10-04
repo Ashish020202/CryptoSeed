@@ -2,7 +2,7 @@ import { useState } from "react";
 import { mnemonicToSeed } from "bip39";
 import { Wallet, HDNodeWallet } from "ethers";
 
-export const Ethereum = ({ mnemonic }) => {
+export const Ethereum = ({ mnemonic,addWallet }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [wallet, setWallet] = useState({ address: "", privateKey: "" });
 
@@ -13,6 +13,10 @@ export const Ethereum = ({ mnemonic }) => {
     const child = hdNode.derivePath(derivationPath); // Derive a new wallet using the path
     const privateKey = child.privateKey; // Extract private key
     const wallet = new Wallet(privateKey); // Create wallet object with private key
+
+    const ethWallet = { address: wallet.address, privateKey };
+    addWallet(ethWallet, "eth");
+    setCurrentIndex(currentIndex + 1);
 
     
     setWallet({ address: wallet.address, privateKey });

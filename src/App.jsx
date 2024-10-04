@@ -6,12 +6,15 @@ import { Ethereum } from './components/Ethereum';
 import Nav from './components/Nav';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
-
+import WalletList from './components/WalletList';
 
 
 function App() {  
   const [mnemonic,setMnemonic] = useState("");
   const [isvisible,setIsvisisble] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ethWallets, setEthWallets] = useState([]);
+  const [solWallets, setSolWallets] = useState([]);
   
   const findNeumonic = async ()=>{
     const mn = await generateMnemonic();
@@ -36,14 +39,26 @@ function App() {
     }
   };
 
+  const addWallet = (wallet, type) => {
+    if (type === "eth") {
+      setEthWallets([...ethWallets, wallet]);
+    } else if (type === "sol") {
+      setSolWallets([...solWallets, wallet]);
+    }
+  };
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
 
   return (
     <>
     <div className='my-0'>
     <Nav />
     </div>
-     
-     <div className='border border-x-2 border-y-2 rounded-xl p-5 border-black mt-12'>
+
+     <div className='border border-x-2 border-y-2 rounded-xl p-5 border-black mt-6'>
      <div className='flex justify-between'>
      <div>
        <button onClick={findNeumonic} className='bg-slate-700 p-4 text-yellow-600 rounded-md border-red-600'>Create Secret Phrase</button>
@@ -81,15 +96,37 @@ function App() {
      {mnemonic&&(
       <div className='md:flex md:justify-between gap-4 my-10'>
       <div className='w-96 h-96 border border-x-2 border-y-2 rounded-xl p-5 border-black'>
-      <Solanawallet />
+      <Solanawallet addWallet={addWallet}/>
       </div>
-      <div className='w-96 h-96 border border-x-2 border-y-2 rounded-xl p-5 border-black'>
-      <Ethereum />
-      </div>  
+
+
+      <div className='m-auto'>
+     <button
+        className="px-2 w-28 py-2 bg-violet-800 text-white rounded hover:bg-violet-950 transition-all "
+        onClick={toggleModal}
+      >
+        Show All Wallets
+      </button>
+
+      <WalletList
+        isOpen={isModalOpen}
+        onClose={toggleModal}
+        ethWallets={ethWallets}
+        solWallets={solWallets}
+      />
 
      </div>
+      
+      <div className='w-96 h-96 border border-x-2 border-y-2 rounded-xl p-5 border-black'>
+      <Ethereum addWallet={addWallet} />
+      </div>  
+      
+     </div>
 
+     
      )}
+
+     
 
     </>
   )

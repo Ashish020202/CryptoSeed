@@ -4,9 +4,11 @@ import { derivePath } from 'ed25519-hd-key';
 import { Keypair } from '@solana/web3.js';
 import nacl from 'tweetnacl';
 
-const Solanawallet = ({ mnemonic }) => {
+
+const Solanawallet = ({ mnemonic,addWallet }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [wallet, setWallet] = useState({ publicKey: '', privateKey: '' });
+  const [showWallet,setShowWallet] = useState()
 
   const handleAddWallet = async () => {
     const seed = await mnemonicToSeed(mnemonic);
@@ -14,6 +16,15 @@ const Solanawallet = ({ mnemonic }) => {
     const derivedSeed = derivePath(path, seed.toString('hex')).key;
     const secret = nacl.sign.keyPair.fromSeed(derivedSeed).secretKey;
     const keypair = Keypair.fromSecretKey(secret);
+
+    const solWallet = {
+      publicKey: keypair.publicKey.toBase58(),
+      privateKey: Buffer.from(secret).toString("hex"),
+    };
+
+    addWallet(solWallet, "sol");
+    setCurrentIndex(currentIndex + 1);
+  
 
     
     setWallet({
